@@ -70,6 +70,10 @@ For alternative installation methods (PATH, alias), see [INSTALL.md](INSTALL.md)
 
 ## Usage
 
+# Example
+
+![alt text](https://i.postimg.cc/rwKH19hf/example.gif)
+
 ### Basic Usage
 
 Display full information for a cryptocurrency:
