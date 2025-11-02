@@ -29,5 +29,12 @@ void display_price_only(const crypto_data_t *data);
  */
 void display_error(const char *message);
 
+/**
+ * @brief Display top cryptocurrencies table
+ * 
+ * @param markets Markets data structure containing array of coins
+ */
+void display_top_coins(const markets_data_t *markets);
+
 #endif /* DISPLAY_H */
 

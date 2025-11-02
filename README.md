@@ -1,4 +1,4 @@
-# crypto-cli-v.1.0.3 by AndreaZero
+# crypto-cli v1.1.0 by AndreaZero
 
 A simple and fast command-line interface (CLI) tool written in C for fetching cryptocurrency prices and information from the CoinGecko API.
 
@@ -6,9 +6,12 @@ A simple and fast command-line interface (CLI) tool written in C for fetching cr
 
 - 🚀 Fast and lightweight C implementation
 - 💰 Real-time cryptocurrency prices
-- 📊 Detailed market information (market cap, volume, 24h change)
+- 📊 Detailed market information (market cap, volume, 24h change, high/low)
+- 🌍 Multi-currency support (USD, EUR, GBP, JPY, and more)
+- 📈 Top cryptocurrencies ranking by market cap
 - 🎯 Simple and intuitive CLI interface
 - 🔍 Support for common cryptocurrency symbols (BTC, ETH, etc.)
+- 📉 24h High/Low price tracking
 
 ## Installation
 
@@ -70,35 +73,60 @@ For alternative installation methods (PATH, alias), see [INSTALL.md](INSTALL.md)
 
 ## Usage
 
-# Example
+### Example
 
 ![alt text](https://i.postimg.cc/rwKH19hf/example.gif)
 
-### Basic Usage
+### Basic Commands
 
-Display full information for a cryptocurrency:
+**Display full information for a cryptocurrency:**
 ```bash
 crypto bitcoin
 crypto btc
 ```
 
-Display only the price:
+**Display only the price:**
 ```bash
 crypto bitcoin price
 crypto btc price
+```
+
+**Display price in different currency:**
+```bash
+crypto bitcoin EUR
+crypto btc GBP
+crypto ethereum JPY
+```
+
+**Show top cryptocurrencies by market cap:**
+```bash
+crypto top          # Top 10 (default)
+crypto top 20       # Top 20
+crypto top 5        # Top 5
 ```
 
 ### Examples
 
 ```bash
 # Full information
-./bin/crypto bitcoin
-./bin/crypto eth
-./bin/crypto solana
+crypto bitcoin
+crypto btc
+crypto ethereum
 
 # Price only
-./bin/crypto btc price
-./bin/crypto ethereum price
+crypto btc price
+crypto ethereum price
+
+# Multi-currency support
+crypto bitcoin EUR
+crypto btc GBP
+crypto eth JPY
+crypto solana CAD
+
+# Top cryptocurrencies
+crypto top          # Top 10
+crypto top 20       # Top 20
+crypto top 50       # Top 50
 ```
 
 ### Supported Symbols
@@ -110,6 +138,15 @@ The tool supports both CoinGecko IDs (e.g., `bitcoin`, `ethereum`) and common sy
 - ICP, THETA, EOS, AAVE, MKR, SUSHI
 
 And many more via CoinGecko ID (lowercase name like `bitcoin`, `ethereum`, etc.).
+
+### Supported Currencies
+
+The tool supports all currencies available on CoinGecko. Common currencies include:
+
+- **Fiat currencies**: USD, EUR, GBP, JPY, CNY, KRW, INR, CAD, AUD, CHF, BRL, and more
+- **Cryptocurrencies**: BTC, ETH, and other crypto pairs
+
+Currency codes are case-insensitive (e.g., `EUR`, `eur`, `Eur` all work).
 
 ### Command Options
 
@@ -125,6 +162,8 @@ And many more via CoinGecko ID (lowercase name like `bitcoin`, `ethereum`, etc.)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   Current Price:      $50000.00
   24h Change:         +$500.00 (+1.00%)
+  24h High:           $51000.00
+  24h Low:            $49000.00
   Market Cap:         $1.00T
   24h Volume:         $50.00B
   Market Cap / Volume: 20.00
@@ -135,6 +174,33 @@ And many more via CoinGecko ID (lowercase name like `bitcoin`, `ethereum`, etc.)
 ### Price Only
 ```
 $50000.00
+```
+
+### Multi-Currency Output
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Bitcoin (BTC)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Current Price:      €45000.00
+  24h Change:         +€450.00 (+1.00%)
+  Market Cap:         €900.00B
+  24h Volume:         €45.00B
+  ...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+### Top Cryptocurrencies Table
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Top 10 Cryptocurrencies by Market Cap
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Rank Symbol  Name                 Price        Market Cap      24h Volume     24h Change
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  1    BTC     Bitcoin              $50000.00    $1.00T          $50.00B        ↑+1.00%
+  2    ETH     Ethereum             $3000.00     $360.00B        $20.00B        ↑+2.50%
+  3    BNB     Binance Coin         $500.00      $75.00B         $5.00B         ↓-0.50%
+  ...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ## Development
@@ -175,6 +241,14 @@ crypto-cli/
 
 This tool uses the [CoinGecko API](https://www.coingecko.com/en/api), which is free and doesn't require an API key for basic usage. The tool respects CoinGecko's rate limits.
 
+### Endpoints Used
+
+- `/simple/price` - Get cryptocurrency prices and market data
+- `/coins/{id}/ohlc` - Get OHLC (Open, High, Low, Close) data for 24h high/low tracking
+- `/coins/markets` - Get top cryptocurrencies by market cap
+
+All endpoints are part of CoinGecko's free tier and don't require authentication.
+
 ## License
 
 This project is open source. Choose an appropriate license (MIT, GPL, etc.) based on your preferences.
@@ -189,15 +263,23 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 - Check your internet connection
 - Verify that the CoinGecko API is accessible
 - Ensure libcurl is properly installed
+- Check if you're hitting CoinGecko's rate limits (free tier: ~10-50 requests/minute)
 
 ### "Cryptocurrency not found"
 - Try using the CoinGecko ID (lowercase, e.g., `bitcoin`) instead of symbol
 - Verify the symbol/ID is correct on CoinGecko
+- Check spelling and try common variations
+
+### "Invalid currency" or Currency Not Supported
+- Verify the currency code is correct (3-letter ISO code, e.g., `EUR`, `GBP`, `JPY`)
+- Currency codes are case-insensitive
+- Check CoinGecko's supported currencies list
 
 ### Build Errors
 - Ensure all dependencies are installed
 - Run `make check-deps` to verify library availability
 - Check that GCC and Make are installed
+- For WSL/Windows: Ensure you're using the correct package manager
 
 ## Author
 
